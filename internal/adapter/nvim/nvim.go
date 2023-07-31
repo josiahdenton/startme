@@ -1,4 +1,4 @@
-package adapter
+package nvim
 
 import (
 	"os"
@@ -10,17 +10,17 @@ type Nvim struct {
 }
 
 func New() *Nvim {
-    cmd := exec.Command("nvim"),
+	cmd := exec.Command("nvim")
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
-    return &Nvim{
-        cmd: cmd
-    }
+	return &Nvim{
+		cmd: cmd,
+	}
 }
 
 func (n *Nvim) Open(path string) error {
-    n.cmd.Args = append(n.cmd.Args, path)
-	err := cmd.Run()
+	n.cmd.Args = append(n.cmd.Args, path)
+	err := n.cmd.Run()
 	if err != nil {
 		return err
 	}

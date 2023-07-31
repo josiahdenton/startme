@@ -12,12 +12,3 @@ func New(title, extension string) Starter {
         extension: extension,
 	}
 }
-
-func (s *Starter) AddContent(editor Editor) error {
-    editor.Open()
-}
-
-
-func (s *Starter) SaveToDb(db *Db) error {
-    return nil
-}
