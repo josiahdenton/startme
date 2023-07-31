@@ -20,8 +20,13 @@ func SetupConfigDirectory() {
 	}
 }
 
-func TempFilePath(file, extension string) string {
-	return fmt.Sprintf("%s.*.%s", file, extension)
+func MustOpenTempFile(file, extension string) *os.File {
+    fp, err := os.CreateTemp("", fmt.Sprintf("%s.*.%s", file, extension))
+    if err != nil {
+        // conv to charm log
+        log.Fatalf("Error: failed to open file: %v", err)
+    }
+	return fp
 }
 
 func doesConfigDirectoryExist() bool {
