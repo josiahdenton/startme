@@ -8,6 +8,13 @@ import (
 
 const configDir = ".startme"
 
+
+func PreferredEditor() string {
+    // TODO - add a config file to fethc this...
+    return "nvim"
+}
+
+
 func DoesConfigDirectoryExist() bool {
     home := userHome()
 	path := path.Join(home, configDir)

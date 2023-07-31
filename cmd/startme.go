@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/josiahdenton/startme/internal/starter"
+	"github.com/josiahdenton/startme/internal/orchestrator"
 )
 
 func main() {
@@ -13,8 +13,8 @@ func main() {
     flag.Parse()
 
 	if len(*name) > 0 {
-		starter.New(*name, *ext)
+        orchestrator.SaveStarter(*name, *ext)
 	} else {
-		starter.Search()
+        orchestrator.Search()
 	}
 }
