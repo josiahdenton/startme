@@ -7,11 +7,18 @@ import (
 	"path"
 )
 
-const configDir = ".startme"
+const (
+    configDir = ".startme"
+    dbName = "startme.db"
+)
 
 func PreferredEditor() string {
 	// TODO - add a config file to fetch this...
 	return "nvim"
+}
+
+func DbPath() string {
+    return path.Join(userHome(), configDir, dbName)
 }
 
 func SetupConfigDirectory() {

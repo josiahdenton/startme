@@ -2,12 +2,14 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"os"
 
+	"github.com/atotto/clipboard"
 	"github.com/josiahdenton/startme/internal/adapter/nvim"
+	"github.com/josiahdenton/startme/internal/adapter/sqlite"
 	"github.com/josiahdenton/startme/internal/config"
+	"github.com/ktr0731/go-fuzzyfinder"
 )
 
 func main() {
@@ -22,43 +24,32 @@ func main() {
 
 func run(name, extension string) {
 	if len(name) > 0 {
+		// TODO - simplify the code here...
 		createTemplate(name, extension)
 	} else {
 		searchTemplates()
 	}
 }
 
-// TOOD - this logic may make more sense as part of the starter domain struct..
-// then we just pass in the interfaces...
 func createTemplate(name, extension string) {
 	editor := nvim.New()
 	fp := config.MustOpenTempFile(name, extension)
 	if err := editor.Open(fp.Name()); err != nil {
 		log.Fatalf("Error: failed to open new startme %v\n", err)
 	}
-	// read content from fp
-	// remove the temp file
 	content := readFromTemplate(fp)
 	os.Remove(fp.Name())
+	saveTemplateToDb(name, content)
+}
 
-	fmt.Println(content)
-
-    
-    // open connection to DB
-    // send 
+func saveTemplateToDb(name, content string) {
+	db := sqlite.New(config.DbPath())
+	db.Setup()
+	defer db.Close()
+	db.Save(name, content)
 }
 
 func readFromTemplate(fp *os.File) string {
-	// TODO - change to buffered read
-	// looking into using strings.Builder with string()?
-	// for {
-	//     n, err := fp.Read()
-	//     if errors.Is(err, io.EOF) && n == 0 {
-	//         break
-	//     } else if err != nil {
-	//
-	//     }
-	// }
 	content, err := os.ReadFile(fp.Name())
 	if err != nil {
 		log.Fatalf("Error: failed to read the file: %v", err)
@@ -67,5 +58,17 @@ func readFromTemplate(fp *os.File) string {
 }
 
 func searchTemplates() {
+	db := sqlite.New(config.DbPath())
+	db.Setup()
+	defer db.Close()
+	starters := db.All()
 
+    selected, err := fuzzyfinder.Find(starters,
+		func(i int) string {
+			return starters[i].Title
+    })
+    if err != nil {
+        log.Fatalf("Error: failed to select an item: %v", err)
+    }
+    clipboard.WriteAll(starters[selected].Content)
 }

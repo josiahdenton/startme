@@ -8,6 +8,6 @@ type Db interface {
 	Connect(path string) error
 	Setup()
 	Close() 
-	Save(s starter.Starter) error
+	Save(title, content string) error
 	All() []starter.Starter
 }
