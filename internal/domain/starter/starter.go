@@ -1,4 +1,4 @@
-package domain
+package starter
 
 type Starter struct {
 	title     string
@@ -6,9 +6,10 @@ type Starter struct {
 	content   string
 }
 
-func New(title, extension string) Starter {
+func New(title, extension, content string) Starter {
 	return Starter{
 		title: title,
         extension: extension,
+        content: content,
 	}
 }

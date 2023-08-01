@@ -1,6 +1,7 @@
 package nvim
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 )
@@ -20,13 +21,10 @@ func New() *Nvim {
 
 func (n *Nvim) Open(path string) error {
 	n.cmd.Args = append(n.cmd.Args, path)
+    fmt.Println(n.cmd.Args)
 	err := n.cmd.Run()
 	if err != nil {
 		return err
 	}
 	return nil
-}
-
-func (n *Nvim) Wait() error {
-	return n.cmd.Wait()
 }
