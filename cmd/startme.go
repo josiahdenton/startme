@@ -63,12 +63,19 @@ func searchTemplates() {
 	defer db.Close()
 	starters := db.All()
 
-    selected, err := fuzzyfinder.Find(starters,
+	selected, err := fuzzyfinder.Find(starters,
 		func(i int) string {
 			return starters[i].Title
-    })
-    if err != nil {
-        log.Fatalf("Error: failed to select an item: %v", err)
-    }
-    clipboard.WriteAll(starters[selected].Content)
+		},
+		fuzzyfinder.WithPreviewWindow(func(i int, width int, height int) string {
+			if i == -1 {
+				return ""
+			}
+			return starters[i].Content
+		}),
+	)
+	if err != nil {
+		log.Fatalf("Error: failed to select an item: %v", err)
+	}
+	clipboard.WriteAll(starters[selected].Content)
 }
