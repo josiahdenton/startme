@@ -9,29 +9,24 @@ Use at your own risk, this is still very new
 - adding a template 
 - searching for a template and copying to system clipboard
 
-and currently only supposts `nvim` as the defualt editor.
+and currently only supposts `nvim` as the default editor.
 
 
 ## Usage
 
 Once you have `startme` on your path, you can run
 
-For help
+- For help
 ```bashrc
 startme -h
 ```
 
-For adding a new template
+- For adding a new template
 ```
-startme -n <title> -e <extension>
-```
-
-or to simply add a markdown file
-```
-startme -n <title>
+startme -n <title> -e <extension> # -e is optional and defaults to md (markdown)
 ```
 
-For searching existing templates
+- For searching existing templates
 ```
 startme 
 ```
@@ -40,6 +35,7 @@ startme
 
 I would like to be able to...
 - delete/edit existing templates
+- have more flexible cmd options
 - make the CLI more "Unix" like
 - set a global config to set the defualt editor (i.e. nvim, vim, vi, emacs, nano)
 - improve the install process by hosting the binary
