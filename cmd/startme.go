@@ -15,7 +15,7 @@ import (
 func main() {
 	config.SetupConfigDirectory()
 	name := flag.String("n", "", "set the name of the template you wish to save")
-	ext := flag.String("e", ".md", "set the extension of the template, default value is .md (markdown)")
+	ext := flag.String("e", "md", "set the extension of the template, default value is .md (markdown)")
 
 	flag.Parse()
 
