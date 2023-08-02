@@ -36,7 +36,7 @@ startme
 I would like to be able to...
 - delete/edit existing templates
 - have more flexible cmd options
-- make the CLI more "Unix" like
+- make the CLI POSIX compliant (possibly use pflags)
 - set a global config to set the defualt editor (i.e. nvim, vim, vi, emacs, nano)
 - improve the install process by hosting the binary
     - possibly use [goreleaser](https://goreleaser.com/)
